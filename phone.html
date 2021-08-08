@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>龙龙的第一个VUE应用程序</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+<div id="book">{{message}}</div>
+
+<script>
+    var vm = new Vue(
+        {
+            el: '#book',
+            data: {
+                message: 'Hello Vue!'
+            }
+        }
+    );
+</script>
+
+</body>
+</html>

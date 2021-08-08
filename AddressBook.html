@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>通讯录</title>
+</head>
+<body>
+
+<!--<input type="button" value="一键查看所有联系人" id="all">-->
+
+
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<div id="searchALL">
+    <input type="button" value="一键查看所有联系人" @click="getphone">
+<!--    <p>{{phone}}</p>-->
+
+<ul>
+    <li v-for="(a,b) in phone">
+        <ul>
+            <ul v-for="c in a">姓名：{{c[0]}}&nbsp&nbsp&nbsp&nbsp 电话：{{c[1]}}</ul>
+        </ul>
+    </li>
+</ul>
+
+
+
+
+</div>
+<script>
+    var searchAll = new Vue({
+        el:"#searchALL",
+        data:{
+            phone:"",
+        },
+        methods:{
+            getphone:function () {
+                var that=this;
+                axios.get("http://127.0.0.1:8888/all").then(function (response) {
+                    console.log(response.data)
+                    that.phone=response.data;
+
+                },
+                function (error) {
+                    console.log(error)
+
+                })
+
+            }
+        }
+    })
+</script>
+
+
+<div id="adduser1">
+    <br>
+    <br>
+    <h2>新增一个用户：</h2>
+    姓名：<input v-model="name3">
+    电话：<input v-model="phone3">
+<!--    <p>{{name3}}的电话是{{phone3}}</p>-->
+    <input type="button" value="新增一个用户" @click="addUser" onclick="MsgAdd()">
+</div>
+
+<script>
+    var adduser1=new Vue({
+        el:"#adduser1",
+        data: {
+            name3:"",
+            phone3:''
+        },
+        methods:{
+            addUser:function () {
+                axios.post("http://127.0.0.1:8888/add"+"?"+"name="+this.name3+"&"+"num="+this.phone3)
+                .then(function (response) {console.log(response);
+
+                }).catch(function (error) {
+                    console.log(error)
+
+                })
+
+            }
+        }
+    })
+    function MsgAdd() {
+        alert("添加成功！")
+
+    }
+</script>
+
+<div id="deluser1">
+    <br>
+    <br>
+    <h2>删除一个联系人：</h2>
+    姓名：<input v-model="name4">
+    <input type="button" value="确定删除" @click="deluser1" onclick="MsgDel()">
+</div>
+
+
+<script>
+    var deluser1=new Vue({
+        el:"#deluser1",
+        data:{
+            name4:"",
+        },
+        methods:{
+            deluser1:function () {
+                axios.delete("http://127.0.0.1:8888/delete"+"?"+"name="+this.name4)
+                .then(function (response) {console.log(response);
+
+
+                }).catch(function (error) {
+                    console.log(error);
+
+                })
+
+            }
+        }
+    })
+
+    function MsgDel() {
+        alert("删除成功！")
+
+    }
+</script>
+<!--<script>-->
+<!--    document.querySelector('#all').onclick=function () {-->
+<!--        axios.get("http://127.0.0.1:8888/all")-->
+<!--            .then(function (response) {-->
+<!--            console.log(response);-->
+<!--        },function (error) {-->
+<!--            console.log(error)-->
+<!--        })-->
+<!--    }-->
+
+<!--</script>-->
+<!--    <div class="search">-->
+<!--        <input type="test" placeholder="请输入姓名" name="" id="" value="" />-->
+<!--        <button><i>搜索</i></button>-->
+
+
+<!--    </div>-->
+
+
+
+</body>
+</html>
